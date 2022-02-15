@@ -50,7 +50,8 @@ int main() {
         }
         river[ind] = 'b';
     }
-std::cout << "river: ";
+
+    std::cout << "river: ";
     for (int i = 0; i < 9; ++i) {
         if (river[i] != 'b' && river[i] != 'f') continue;
         std::cout << i << ":" << river[i] << " ";
