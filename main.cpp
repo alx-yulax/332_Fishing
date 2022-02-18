@@ -1,6 +1,12 @@
 #include <iostream>
 #include <ctime>
 
+enum InRiver{
+    NONE,
+    FISH,
+    BOOT
+
+};
 class Fish {
 public:
     std::string what() {
@@ -22,12 +28,12 @@ public:
     }
 };
 
-void catchFish(int ind, char river[]) {
+void catchFish(int ind, InRiver river[]) {
     if (ind < 0 || ind > 8) {
         throw std::invalid_argument("ind");
-    } else if (river[ind] == 'f') {
+    } else if (river[ind] == FISH) {
         throw Fish();
-    } else if (river[ind] == 'b') {
+    } else if (river[ind] == BOOT) {
         throw Boot();
     } else {
         throw TryAgain();
@@ -36,25 +42,29 @@ void catchFish(int ind, char river[]) {
 
 int main() {
     std::srand(std::time(nullptr));
-    char river[9] = {};
+    InRiver river[9] = {NONE};
 
     //fish
-    river[std::rand() % 9] = 'f';
+    river[std::rand() % 9] = FISH;
 
     //boots
     for (int i = 0; i < 3; ++i) {
         int ind = std::rand() % 9;
-        if (river[ind] == 'f' || river[ind] == 'b') {
+        if (river[ind] == FISH || river[ind] == BOOT) {
             --i;
             continue;
         }
-        river[ind] = 'b';
+        river[ind] = BOOT;
     }
 
     std::cout << "river: ";
+
     for (int i = 0; i < 9; ++i) {
-        if (river[i] != 'b' && river[i] != 'f') continue;
-        std::cout << i << ":" << river[i] << " ";
+        if (river[i] == FISH){
+            std::cout << i << ":FISH ";
+        } else if (river[i] == BOOT) {
+            std::cout << i << ":BOOT ";
+        }
     }
 
     std::cout << std::endl << "input index (0-8): ";
